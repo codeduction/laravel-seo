@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use RalphJSmit\Laravel\SEO\Schema\ArticleSchema;
 use RalphJSmit\Laravel\SEO\Schema\BreadcrumbListSchema;
 use RalphJSmit\Laravel\SEO\Schema\FaqPageSchema;
+use RalphJSmit\Laravel\SEO\Schema\LocalBusinessSchema;
 use RalphJSmit\Laravel\SEO\Schema\Schema;
 
 class SchemaCollection extends Collection
@@ -15,6 +16,7 @@ class SchemaCollection extends Collection
         'article' => ArticleSchema::class,
         'breadcrumbs' => BreadcrumbListSchema::class,
         'faqPage' => FaqPageSchema::class,
+        'localBusiness' => LocalBusinessSchema::class,
     ];
 
     public array $markup = [];
@@ -33,9 +35,17 @@ class SchemaCollection extends Collection
         return $this;
     }
 
+
     public function addFaqPage(?Closure $builder = null): static
     {
         $this->markup[$this->dictionary['faqPage']][] = $builder ?: fn (Schema $schema): Schema => $schema;
+
+        return $this;
+     }
+
+    public function addLocalBusiness(?Closure $builder = null): static
+    {
+        $this->markup[$this->dictionary['localBusiness']][] = $builder ?: fn (Schema $schema): Schema => $schema;
 
         return $this;
     }
